@@ -1,6 +1,6 @@
 CREATE DATABASE pernPyAuto;
 
-CREATE TABLE script
+CREATE TABLE Script
 (
     script_id SERIAL PRIMARY KEY,
     description VARCHAR(255),
