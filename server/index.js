@@ -19,10 +19,19 @@ app.listen(port, () => {
 
 // Script1
 
-app.post("/script", async (req, res) => {
+app.post("/script/:id", async (req, res) => {
   try {
-    const script = await pool.query("select * from Script");
-    res.json(script);
+    var spawn = require("child_process").spawn;
+    var process = spawn("python", [
+      "Scripts/OdinSignatureTracker.py",
+      "deedde",
+      "esrestoy",
+      "Gillian21",
+    ]);
+    process.on("exit", () => {
+      res.send(null);
+    });
+    console.log(process.connected);
   } catch (error) {
     console.error(error);
   }
