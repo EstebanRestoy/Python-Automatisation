@@ -1,18 +1,27 @@
+require("dotenv").config();
+
 const express = require("express");
-const app = express();
-const port = 3000;
-const pool = require("./db");
+const bodyParser = require("body-parser");
+const db = require("./models");
+const apiUser = require("./controllers/user");
 const cors = require("cors");
 
+const app = express();
+
 app.use(cors());
-app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+db.sequelize.sync();
+console.log(db.users);
+apiUser(app, db);
+
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}!`);
 });
 
 /* ROUTES */
