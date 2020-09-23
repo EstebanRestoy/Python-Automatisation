@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./models");
 const apiUser = require("./controllers/user");
+const apiScript = require("./controllers/script");
 const cors = require("cors");
 
 const app = express();
@@ -17,8 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 db.sequelize.sync();
-console.log(db.users);
 apiUser(app, db);
+apiScript(app, db);
 
 app.listen(process.env.PORT, () => {
   console.log(`Example app listening on port ${process.env.PORT}!`);
